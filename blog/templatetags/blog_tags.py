@@ -1,4 +1,7 @@
 from django.db.models import Count
+from django.template import Library
+from blog.models import Post
+register = Library()
 @register.simple_tag
 def get_most_commented_posts(count=5):
     return Post.objects.annotate(total_comments=Count('comments')).order_by('-total_comments')[:count]
